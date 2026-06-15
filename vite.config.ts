@@ -14,23 +14,21 @@ function removeModuleType(): Plugin {
   };
 }
 
-// export default defineConfig({
-//   plugins: [removeModuleType()],
-//   base: './',
-//   build: {
-//     outDir: 'dist',
-//     sourcemap: true,
-//     rollupOptions: {
-//       output: {
-//         format: 'iife',
-//         inlineDynamicImports: true,
-//       },
-//     },
-//   },
-// });
-
 export default defineConfig({
-  // Replace 'uk-utilities-qa-generator' with your actual GitHub repository name
+  plugins: [removeModuleType()],
+  
+  // CHANGE THIS: Replace 'uk-utilities-qa-generator' with your exact GitHub repository name.
+  // CRITICAL: Ensure it starts and ends with a forward slash /
   base: '/filegenerators/', 
-  plugins: [removeModuleType()] // your plugins here, if any
-})
+  
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        format: 'iife',
+        inlineDynamicImports: true,
+      },
+    },
+  },
+});
