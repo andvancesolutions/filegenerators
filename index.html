@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Industry File Generator</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="header-inner">
+          <div class="header-title">
+            <span class="header-icon">⚡</span>
+            <div>
+              <h1>Industry File Generator</h1>
+              <p>D-flow &amp; CSS Message Generator</p>
+            </div>
+          </div>
+          <div class="header-badge">Local QA Tool &bull; v1.0</div>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <!-- Step 1: Utility + Process Selection -->
+        <aside class="sidebar">
+          <section class="panel">
+            <h2 class="panel-title">
+              <span class="step-badge">1</span> Utility Type
+            </h2>
+            <div id="utility-selector" class="selector-group"></div>
+          </section>
+
+          <section class="panel" id="process-panel" style="display:none;">
+            <h2 class="panel-title">
+              <span class="step-badge">2</span> Business Process
+            </h2>
+            <div id="process-selector" class="selector-group"></div>
+          </section>
+        </aside>
+
+        <!-- Step 2: Dynamic Form -->
+        <section class="content-area">
+          <div id="form-placeholder" class="form-placeholder">
+            <div class="placeholder-content">
+              <div class="placeholder-icon">📋</div>
+              <h3>Select a utility and process to begin</h3>
+              <p>Choose from the left panel to load the input form</p>
+            </div>
+          </div>
+
+          <div id="form-area" style="display:none;">
+            <div class="form-header">
+              <div>
+                <h2 id="form-title">Process Form</h2>
+                <p id="form-description" class="form-desc"></p>
+              </div>
+              <div class="form-actions">
+                <button id="btn-import-raw" class="btn btn-orange" disabled>
+                  ⬆ Import Raw Data
+                </button>
+                <button id="btn-generate" class="btn btn-primary" disabled>
+                  ⚙ Generate Files
+                </button>
+                <button id="btn-download" class="btn btn-success" disabled>
+                  ⬇ Save Files
+                </button>
+                <button id="btn-import-json" class="btn btn-teal" disabled>
+                  ⬆ Import JSON
+                </button>
+                <button id="btn-export-json" class="btn btn-purple" disabled>
+                  ⬇ Export Input
+                </button>
+              </div>
+              <input type="file" id="input-import-json" accept=".json" style="display:none" />
+              <input type="file" id="input-import-raw" accept=".usr,.json" multiple style="display:none" />
+            </div>
+
+            <!-- Industry Data Lookup (collapsible) -->
+            <div id="industry-lookup-panel" class="collapsible-panel">
+              <button id="industry-lookup-toggle" class="collapsible-header" aria-expanded="false">
+                <span class="group-icon">🔍</span>
+                <span>Industry Data Lookup</span>
+                <span class="collapsible-chevron">▼</span>
+              </button>
+              <div id="industry-lookup-body" class="collapsible-body" style="display:none;">
+                <div class="lookup-config-row">
+                  <label class="field-label" for="industry-config-file">Load Config from JSON file</label>
+                  <input type="file" id="industry-config-file" accept=".json" class="field-input" />
+                  <span class="field-help">JSON file should contain: <code>{ "url": "...", "authKey": "..." }</code></span>
+                </div>
+                <div class="lookup-fields-grid">
+                  <div class="field-wrapper">
+                    <label class="field-label" for="industry-api-url">API URL <span class="field-required">*</span></label>
+                    <input type="text" id="industry-api-url" class="field-input" placeholder="https://..." />
+                  </div>
+                  <div class="field-wrapper">
+                    <label class="field-label" for="industry-auth-key">Authorization</label>
+                    <input type="text" id="industry-auth-key" class="field-input" placeholder="Bearer token or API key" />
+                  </div>
+                  <div class="field-wrapper">
+                    <label class="field-label" for="industry-mpan">MPAN <span class="field-required">*</span></label>
+                    <input type="text" id="industry-mpan" class="field-input" placeholder="13-digit MPAN" maxlength="13" />
+                  </div>
+                </div>
+                <div>
+                  <button id="btn-get-industry-data" class="btn btn-amber">🔍 Get Industry Data</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="status-bar" class="status-bar" style="display:none;">
+              <span id="status-icon">✓</span>
+              <span id="status-text"></span>
+              <button id="status-close" class="status-close" aria-label="Dismiss">✕</button>
+            </div>
+
+            <div id="form-body" class="form-body"></div>
+
+            <!-- Industry Data Response (collapsible) -->
+            <div id="industry-response-panel" class="collapsible-panel" style="display:none;">
+              <button id="industry-response-toggle" class="collapsible-header" aria-expanded="true">
+                <span class="group-icon">📊</span>
+                <span>Industry Data Response</span>
+                <span class="collapsible-chevron">▲</span>
+              </button>
+              <div id="industry-response-body" class="collapsible-body">
+                <pre id="industry-response-content" class="response-json"></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+
+    <div id="toast" class="toast" aria-live="polite" style="display:none;">
+      <span id="toast-icon"></span>
+      <span id="toast-text"></span>
+      <button id="toast-close" class="status-close" aria-label="Dismiss">✕</button>
+    </div>
+  </body>
+</html>
